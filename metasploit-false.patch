@@ -1,0 +1,8 @@
+--- framework-2.7/lib/Digest/Perl/MD5.pm.orig	2006-11-02 14:32:53.000000000 +0100
++++ framework-2.7/lib/Digest/Perl/MD5.pm	2006-11-02 14:33:07.000000000 +0100
+@@ -1,4 +1,4 @@
+-#! /usr/bin/false
++#! /bin/false
+ #
+ # $Id$
+ #
