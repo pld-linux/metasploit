@@ -17,7 +17,7 @@ Patch0:		%{name}-false.patch
 URL:		http://www.metasploit.com/projects/Framework/
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	perl-Term-ReadLine-Gnu
-Requires:	perl-base >= 5.8.8
+Requires:	perl-base >= 1:5.8.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
