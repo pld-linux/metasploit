@@ -5,7 +5,7 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	The Metasploit Framework - a powerful tool for penetration testing
-Summary(pl):	Metasploit Framework - narzêdzie wspomagaj±ce testy penetracyjne
+Summary(pl.UTF-8):   Metasploit Framework - narzÄ™dzie wspomagajÄ…ce testy penetracyjne
 Name:		metasploit
 Version:	2.7
 Release:	0.1
@@ -27,11 +27,11 @@ started off as a portable network game and has evolved into a
 powerful tool for penetration testing, exploit development, and
 vulnerability research.
 
-%description -l pl
+%description -l pl.UTF-8
 Metasploit Framework to zaawansowana platforma do tworzenia,
-testowania i wykorzystywania kodu exploitów. Projekt ten pocz±tkowo
-mai³ byæ przeno¶n± gr± sieciow±, a wyewoluowa³ do potê¿nego narzêdzia
-do testów penetracyjnych, tworzenia exploitów i wyszukiwania luk.
+testowania i wykorzystywania kodu exploitÃ³w. Projekt ten poczÄ…tkowo
+maiÅ‚ byÄ‡ przenoÅ›nÄ… grÄ… sieciowÄ…, a wyewoluowaÅ‚ do potÄ™Å¼nego narzÄ™dzia
+do testÃ³w penetracyjnych, tworzenia exploitÃ³w i wyszukiwania luk.
 
 %prep
 %setup -q -n framework-%{version}
