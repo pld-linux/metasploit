@@ -1,16 +1,15 @@
 #
 # TODO:	
 #	- add R: rails and RubyGems
-#	- resolve runtime problem with loading ruby modules (rex)
-#	  (move stuff to %{ruby_rubylibdir} ?)
 #	- fix double marking files 
 #	- some docs redundant
+#	- fix req /usr/local/bin/ruby 
 #
 Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
 Name:		metasploit3
 Version:	3.0
-Release:	0.5
+Release:	0.6
 License:	MFL v1.2+
 Group:		Applications
 Source0:	http://framework-mirrors.metasploit.com/msf/downloader/framework-%{version}.tar.gz
@@ -66,7 +65,11 @@ cp -a$l documentation/LICENSE LICENSE
 cp -a$l documentation/ChangeLog ChangeLog
 
 cd $RPM_BUILD_ROOT%{_bindir}
-ln -s ../lib/metasploit3/msf* ./
+
+for msf in msfcli msfconsole msfd msfencode msfgui msfopcode msfpayload msfpescan msfweb
+do
+	ln -sf %{_libdir}/metasploit3/${msf} ${msf}
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
