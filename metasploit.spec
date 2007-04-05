@@ -14,7 +14,7 @@ URL:		http://www.metasploit.com/projects/Framework/
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	perl-Term-ReadLine-Gnu
 Requires:	perl-base >= 1:5.8.8
-BuildArch:	noarch
+#BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -134,7 +134,6 @@ for msf in msfcli msfconsole msfdldebug msfelfscan msfencode msflogdump msfpaylo
 	do 
 		ln -s ../lib/metasploit2/${msf} ${msf}2
 	done
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
