@@ -10,7 +10,7 @@ Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
 Name:		metasploit3
 Version:	3.0
-Release:	0.4
+Release:	0.5
 License:	MFL v1.2+
 Group:		Applications
 Source0:	http://framework-mirrors.metasploit.com/msf/downloader/framework-%{version}.tar.gz
@@ -429,7 +429,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/metasploit3/documentation/metasploit2
 %dir %{_libdir}/metasploit3/plugins
 
-%{_libdir}/metasploit3/lib/*
+%{_libdir}/metasploit3/lib/*.rb
 %{_libdir}/metasploit3/lib/msf/*
 %{_libdir}/metasploit3/lib/msf/ui/*
 %{_libdir}/metasploit3/lib/msf/ui/web/*
