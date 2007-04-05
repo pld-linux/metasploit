@@ -1,14 +1,10 @@
 #
-# TODO
-#	- simplify spec
-#	- prepare init script for web interface
-#
 %include	/usr/lib/rpm/macros.perl
 Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
 Name:		metasploit
 Version:	2.7
-Release:	0.1
+Release:	1
 License:	GPL v2 / Artistic
 Group:		Applications
 Source0:	http://www.metasploit.com/tools/framework-%{version}.tar.gz
@@ -18,6 +14,7 @@ URL:		http://www.metasploit.com/projects/Framework/
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	perl-Term-ReadLine-Gnu
 Requires:	perl-base >= 1:5.8.8
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,26 +38,26 @@ do testów penetracyjnych, tworzenia exploitów i wyszukiwania luk.
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2
 
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/tools
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/t
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/payloads
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/payloads/external
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/nops
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/exploits
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/encoders
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/passivex
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/themes
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/themes/gwhite
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/themes/gblack
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/themes/default
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/icons
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfpescan
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfpayload
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data/meterpreter
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/data
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit/lib
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/tools
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/t
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/payloads
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/payloads/external
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/nops
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/exploits
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/encoders
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/passivex
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/themes
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/themes/gwhite
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/themes/gblack
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/themes/default
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/icons
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfpescan
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfpayload
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data/meterpreter
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/data
+install -d $RPM_BUILD_ROOT%{_libdir}/metasploit2/lib
 
 install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Digest/Perl
 install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Msf/Encoder
@@ -79,28 +76,28 @@ install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Pex/Nasm
 install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Pex/Poly/BlockMaster
 install -d $RPM_BUILD_ROOT%{perl_vendorlib}/Pex/Socket
 
-install msf*					$RPM_BUILD_ROOT%{_libdir}/metasploit
+install msf*					$RPM_BUILD_ROOT%{_libdir}/metasploit2
 
-install tools/* 				$RPM_BUILD_ROOT%{_libdir}/metasploit/tools
-install	t/dcerpc.pl 				$RPM_BUILD_ROOT%{_libdir}/metasploit/t
-install	payloads/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit/payloads
-install	payloads/external/*.py			$RPM_BUILD_ROOT%{_libdir}/metasploit/payloads/external
-install	nops/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit/nops
-install	exploits/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit/exploits
-install	encoders/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit/encoders
-install	data/passivex/passivex.dll		$RPM_BUILD_ROOT%{_libdir}/metasploit/data/passivex
-install	data/msfweb/themes/gwhite/*		$RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/themes/gwhite
-install	data/msfweb/themes/gblack/*		$RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/themes/gblack
-install	data/msfweb/themes/default/*		$RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/themes/default
-install	data/msfweb/icons/*.gif			$RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfweb/icons
-install	data/msfpescan/identify.txt		$RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfpescan
-install	data/msfpayload/template.exe		$RPM_BUILD_ROOT%{_libdir}/metasploit/data/msfpayload
-install	data/meterpreter/ext_server_*.dll	$RPM_BUILD_ROOT%{_libdir}/metasploit/data/meterpreter
-install	data/dce_errors.txt			$RPM_BUILD_ROOT%{_libdir}/metasploit/data
-install	data/rpc_names				$RPM_BUILD_ROOT%{_libdir}/metasploit/data
-install	data/shelldemo				$RPM_BUILD_ROOT%{_libdir}/metasploit/data
-install	data/smb_errors.txt			$RPM_BUILD_ROOT%{_libdir}/metasploit/data
-install	data/vncdll.dll				$RPM_BUILD_ROOT%{_libdir}/metasploit/data
+install tools/* 				$RPM_BUILD_ROOT%{_libdir}/metasploit2/tools
+install	t/dcerpc.pl 				$RPM_BUILD_ROOT%{_libdir}/metasploit2/t
+install	payloads/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit2/payloads
+install	payloads/external/*.py			$RPM_BUILD_ROOT%{_libdir}/metasploit2/payloads/external
+install	nops/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit2/nops
+install	exploits/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit2/exploits
+install	encoders/*.pm				$RPM_BUILD_ROOT%{_libdir}/metasploit2/encoders
+install	data/passivex/passivex.dll		$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/passivex
+install	data/msfweb/themes/gwhite/*		$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/themes/gwhite
+install	data/msfweb/themes/gblack/*		$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/themes/gblack
+install	data/msfweb/themes/default/*		$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/themes/default
+install	data/msfweb/icons/*.gif			$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfweb/icons
+install	data/msfpescan/identify.txt		$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfpescan
+install	data/msfpayload/template.exe		$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/msfpayload
+install	data/meterpreter/ext_server_*.dll	$RPM_BUILD_ROOT%{_libdir}/metasploit2/data/meterpreter
+install	data/dce_errors.txt			$RPM_BUILD_ROOT%{_libdir}/metasploit2/data
+install	data/rpc_names				$RPM_BUILD_ROOT%{_libdir}/metasploit2/data
+install	data/shelldemo				$RPM_BUILD_ROOT%{_libdir}/metasploit2/data
+install	data/smb_errors.txt			$RPM_BUILD_ROOT%{_libdir}/metasploit2/data
+install	data/vncdll.dll				$RPM_BUILD_ROOT%{_libdir}/metasploit2/data
 
 install lib/*.pm 				$RPM_BUILD_ROOT%{perl_vendorlib}
 install lib/Digest/*.pm 			$RPM_BUILD_ROOT%{perl_vendorlib}/Digest
@@ -132,7 +129,12 @@ install lib/Pex/Poly/BlockMaster/*.pm 		$RPM_BUILD_ROOT%{perl_vendorlib}/Pex/Pol
 install lib/Pex/Socket/*.pm 			$RPM_BUILD_ROOT%{perl_vendorlib}/Pex/Socket
 
 cd $RPM_BUILD_ROOT%{_bindir}
-ln -s ../lib/metasploit/msf* ./
+
+for msf in msfcli msfconsole msfdldebug msfelfscan msfencode msflogdump msfpayload msfpescan msfupdate msfweb
+	do 
+		ln -s ../lib/metasploit2/${msf} ${msf}2
+	done
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -141,8 +143,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc docs/*
 %attr(755,root,root) %{_bindir}/msf*
-%dir %{_libdir}/metasploit
-%attr(755,root,root) %{_libdir}/metasploit/msf*
+%dir %{_libdir}/metasploit2
+%attr(755,root,root) %{_libdir}/metasploit2/msf*
 
 %dir %{perl_vendorlib}/Digest
 %dir %{perl_vendorlib}/Digest/Perl
@@ -173,23 +175,23 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{perl_vendorlib}/Pex/Poly/BlockMaster
 %dir %{perl_vendorlib}/Pex/Socket
 
-%dir %{_libdir}/metasploit/tools
-%dir %{_libdir}/metasploit/t
-%dir %{_libdir}/metasploit/payloads
-%dir %{_libdir}/metasploit/payloads/external
-%dir %{_libdir}/metasploit/nops
-%dir %{_libdir}/metasploit/exploits
-%dir %{_libdir}/metasploit/encoders
-%dir %{_libdir}/metasploit/data/passivex
-%dir %{_libdir}/metasploit/data/msfweb/themes
-%dir %{_libdir}/metasploit/data/msfweb/themes/gwhite
-%dir %{_libdir}/metasploit/data/msfweb/themes/gblack
-%dir %{_libdir}/metasploit/data/msfweb/themes/default
-%dir %{_libdir}/metasploit/data/msfweb/icons
-%dir %{_libdir}/metasploit/data/msfpescan
-%dir %{_libdir}/metasploit/data/msfpayload
-%dir %{_libdir}/metasploit/data/meterpreter
-%dir %{_libdir}/metasploit/data
+%dir %{_libdir}/metasploit2/tools
+%dir %{_libdir}/metasploit2/t
+%dir %{_libdir}/metasploit2/payloads
+%dir %{_libdir}/metasploit2/payloads/external
+%dir %{_libdir}/metasploit2/nops
+%dir %{_libdir}/metasploit2/exploits
+%dir %{_libdir}/metasploit2/encoders
+%dir %{_libdir}/metasploit2/data/passivex
+%dir %{_libdir}/metasploit2/data/msfweb/themes
+%dir %{_libdir}/metasploit2/data/msfweb/themes/gwhite
+%dir %{_libdir}/metasploit2/data/msfweb/themes/gblack
+%dir %{_libdir}/metasploit2/data/msfweb/themes/default
+%dir %{_libdir}/metasploit2/data/msfweb/icons
+%dir %{_libdir}/metasploit2/data/msfpescan
+%dir %{_libdir}/metasploit2/data/msfpayload
+%dir %{_libdir}/metasploit2/data/meterpreter
+%dir %{_libdir}/metasploit2/data
 
 %{perl_vendorlib}/*.pm
 %{perl_vendorlib}/Digest/*.pm
@@ -220,23 +222,23 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_vendorlib}/Pex/Poly/BlockMaster/*.pm
 %{perl_vendorlib}/Pex/Socket/*.pm
 
-%{_libdir}/metasploit/tools/*
-%{_libdir}/metasploit/t/dcerpc.pl
-%{_libdir}/metasploit/payloads/*.pm
-%{_libdir}/metasploit/payloads/external/*.py
-%{_libdir}/metasploit/nops/*.pm
-%{_libdir}/metasploit/exploits/*.pm
-%{_libdir}/metasploit/encoders/*.pm
-%{_libdir}/metasploit/data/passivex/passivex.dll
-%{_libdir}/metasploit/data/msfweb/themes/gwhite/*
-%{_libdir}/metasploit/data/msfweb/themes/gblack/*
-%{_libdir}/metasploit/data/msfweb/themes/default/*
-%{_libdir}/metasploit/data/msfweb/icons/*.gif
-%{_libdir}/metasploit/data/msfpescan/identify.txt
-%{_libdir}/metasploit/data/msfpayload/template.exe
-%{_libdir}/metasploit/data/meterpreter/ext_server_*.dll
-%{_libdir}/metasploit/data/dce_errors.txt
-%{_libdir}/metasploit/data/rpc_names
-%{_libdir}/metasploit/data/shelldemo
-%{_libdir}/metasploit/data/smb_errors.txt
-%{_libdir}/metasploit/data/vncdll.dll
+%{_libdir}/metasploit2/tools/*
+%{_libdir}/metasploit2/t/dcerpc.pl
+%{_libdir}/metasploit2/payloads/*.pm
+%{_libdir}/metasploit2/payloads/external/*.py
+%{_libdir}/metasploit2/nops/*.pm
+%{_libdir}/metasploit2/exploits/*.pm
+%{_libdir}/metasploit2/encoders/*.pm
+%{_libdir}/metasploit2/data/passivex/passivex.dll
+%{_libdir}/metasploit2/data/msfweb/themes/gwhite/*
+%{_libdir}/metasploit2/data/msfweb/themes/gblack/*
+%{_libdir}/metasploit2/data/msfweb/themes/default/*
+%{_libdir}/metasploit2/data/msfweb/icons/*.gif
+%{_libdir}/metasploit2/data/msfpescan/identify.txt
+%{_libdir}/metasploit2/data/msfpayload/template.exe
+%{_libdir}/metasploit2/data/meterpreter/ext_server_*.dll
+%{_libdir}/metasploit2/data/dce_errors.txt
+%{_libdir}/metasploit2/data/rpc_names
+%{_libdir}/metasploit2/data/shelldemo
+%{_libdir}/metasploit2/data/smb_errors.txt
+%{_libdir}/metasploit2/data/vncdll.dll
