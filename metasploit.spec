@@ -5,7 +5,7 @@ Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
 Name:		metasploit3
 Version:	3.1
-Release:	0.6
+Release:	0.7
 License:	MFL v1.2+
 Group:		Applications
 Source0:	http://spool.metasploit.com/releases/framework-%{version}.tar.gz
@@ -48,11 +48,17 @@ Metasploit Framework 2.7.
 %prep
 %setup -q -n framework-%{version}
 find -name .svn -type d -print0 | xargs -0 rm -rf
-%patch0 -p1
 egrep -rl '/usr/local/bin/ruby|/usr/bin/env' . | xargs %{__sed} -i -e '
 	1s,#!.*/bin/ruby,#!/usr/bin/ruby,
 	1s,#!/usr/bin/env ruby,#!/usr/bin/ruby,
 '
+%patch0 -p1
+
+# cleanup backups after patching
+find . '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
+# win32 binary with source
+rm -rf tools/memdump
 
 %install
 rm -rf $RPM_BUILD_ROOT
