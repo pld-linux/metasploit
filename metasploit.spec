@@ -48,9 +48,9 @@ Metasploit Framework 2.7.
 %prep
 %setup -q -n framework-%{version}
 find -name .svn -type d -print0 | xargs -0 rm -rf
-egrep -rl '/usr/local/bin/ruby|/usr/bin/env' . | xargs %{__sed} -i -e '
-	1s,#!.*/bin/ruby,#!/usr/bin/ruby,
-	1s,#!/usr/bin/env ruby,#!/usr/bin/ruby,
+egrep -rl '/usr/local/bin/ruby|/''usr/bin/env' . | xargs %{__sed} -i -e '
+	1s,#!.*/bin/ruby,#!/''usr/bin/ruby,
+	1s,#!/''usr/bin/env ruby,#!/''usr/bin/ruby,
 '
 %patch0 -p1
 
