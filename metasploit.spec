@@ -19,8 +19,8 @@ Requires:	ruby
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# some image in x86 ELF format
-%define		_noautostrip	.*%{_datadir}/metasploit3/data/templates/template_x86_linux.bin
+# Shellcode templates for various arches
+%define		_noautostrip	.*%{_datadir}/metasploit3/data/templates
 # blah, disable stripping, the above didn't work
 %define		no_install_post_strip 1
 %define		_enable_debug_packages	0
