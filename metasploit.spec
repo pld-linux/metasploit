@@ -1,10 +1,8 @@
-#
 # TODO:	
 #	- add R: rails and RubyGems
 #	- fix double marking files 
 #	- some docs redundant
 #	- fix req /usr/local/bin/ruby 
-#
 Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
 Name:		metasploit3
@@ -43,13 +41,11 @@ Metasploit Framework 2.7.
 
 %prep
 %setup -q -n framework-%{version}
+find -name .svn -type d -print0 | xargs -0 rm -rf
 
 %install
 rm -rf $RPM_BUILD_ROOT
-find . -name .svn -type d -print0 | xargs -0 rm -rf
-
-install -d $RPM_BUILD_ROOT%{_bindir}
-install -d $RPM_BUILD_ROOT%{_libdir}/metasploit3
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/metasploit3}
 
 # test if we can hardlink -- %{_builddir} and $RPM_BUILD_ROOT on same partition
 l=''
@@ -60,15 +56,8 @@ fi
                                                                                                                                                                                                   
 cp -a$l * $RPM_BUILD_ROOT%{_libdir}/metasploit3
 
-cp -a$l documentation/COPYING COPYING
-cp -a$l documentation/LICENSE LICENSE
-cp -a$l documentation/ChangeLog ChangeLog
-
-cd $RPM_BUILD_ROOT%{_bindir}
-
-for msf in msfcli msfconsole msfd msfencode msfgui msfopcode msfpayload msfpescan msfweb
-do
-	ln -sf %{_libdir}/metasploit3/${msf} ${msf}
+for msf in msfcli msfconsole msfd msfencode msfgui msfopcode msfpayload msfpescan msfweb; do
+	ln -sf %{_libdir}/metasploit3/$msf $RPM_BUILD_ROOT%{_bindir}/$msf
 done
 
 %clean
@@ -76,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README COPYING LICENSE ChangeLog
+%doc README documentation/{COPYING,LICENSE,ChangeLog}
 %attr(755,root,root) %{_bindir}/msf*
 %dir %{_libdir}/metasploit3
 %attr(755,root,root) %{_libdir}/metasploit3/msf*
