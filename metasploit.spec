@@ -3,13 +3,13 @@
 # - some docs redundant
 Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
-Name:		metasploit3
-Version:	3.1
-Release:	0.7
+Name:		metasploit
+Version:	4.5.2
+Release:	0.2
 License:	MFL v1.2+
 Group:		Applications
-Source0:	http://spool.metasploit.com/releases/framework-%{version}.tar.gz
-# Source0-md5:	5858d5af28933dcc22a0e22831c2f511
+Source0:	http://downloads.metasploit.com/data/releases/archive/framework-%{version}.tar.bz2
+# Source0-md5:	d0aa92a67fd01f2ec79d05db18ac451c
 Patch0:		%{name}-datadir.patch
 URL:		http://www.metasploit.com/framework/
 BuildRequires:	sed >= 4.0
@@ -20,9 +20,14 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # Shellcode templates for various arches
-%define		_noautostrip	.*%{_datadir}/metasploit3/data/templates
+%define		_noautostrip	.*%{_datadir}/%{name}/data/templates
+
+# data/john/run.linux.x64.mmx/calc_stat' probably isn't a 32-bit LSB-first ELF file.
+%define		_noautochrpath	.*%{_datadir}/%{name}/data/john
+
 # blah, disable stripping, the above didn't work
 %define		no_install_post_strip 1
+%define		no_install_post_chrpath	1
 %define		_enable_debug_packages	0
 
 %description
@@ -46,13 +51,13 @@ jeszcze wszystkich exploitów. Nie jest to pełny zamiennik Perlowego
 Metasploit Framework 2.7.
 
 %prep
-%setup -q -n framework-%{version}
+%setup -q -n msf3
 find -name .svn -type d -print0 | xargs -0 rm -rf
 egrep -rl '/usr/local/bin/ruby|/''usr/bin/env' . | xargs %{__sed} -i -e '
 	1s,#!.*/bin/ruby,#!/''usr/bin/ruby,
 	1s,#!/''usr/bin/env ruby,#!/''usr/bin/ruby,
 '
-%patch0 -p1
+#%patch0 -p1
 
 # cleanup backups after patching
 find . '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
@@ -73,24 +78,34 @@ fi
 
 cp -a$l . $RPM_BUILD_ROOT%{_datadir}/%{name}
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/msf* $RPM_BUILD_ROOT%{_bindir}
-rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/README
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/%{name}/.{gitignore,rspec,travis.yml}
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/%{name}/{*.md,COPYING,HACKING,LICENSE}
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/%{name}/test
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README documentation/{COPYING,LICENSE,ChangeLog}
+%doc *.md COPYING HACKING LICENSE
+%attr(755,root,root) %{_bindir}/msfbinscan
 %attr(755,root,root) %{_bindir}/msfcli
 %attr(755,root,root) %{_bindir}/msfconsole
 %attr(755,root,root) %{_bindir}/msfd
+%attr(755,root,root) %{_bindir}/msfelfscan
 %attr(755,root,root) %{_bindir}/msfencode
 %attr(755,root,root) %{_bindir}/msfgui
-%attr(755,root,root) %{_bindir}/msfopcode
+%attr(755,root,root) %{_bindir}/msfmachscan
 %attr(755,root,root) %{_bindir}/msfpayload
 %attr(755,root,root) %{_bindir}/msfpescan
-%attr(755,root,root) %{_bindir}/msfweb
+%attr(755,root,root) %{_bindir}/msfrop
+%attr(755,root,root) %{_bindir}/msfrpc
+%attr(755,root,root) %{_bindir}/msfrpcd
+%attr(755,root,root) %{_bindir}/msfupdate
+%attr(755,root,root) %{_bindir}/msfvenom
+
 %dir %{_datadir}/%{name}
+%{_datadir}/%{name}/armitage
 %{_datadir}/%{name}/data
 %{_datadir}/%{name}/documentation
 %{_datadir}/%{name}/external
@@ -98,4 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}/modules
 %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/scripts
+%{_datadir}/%{name}/spec
 %{_datadir}/%{name}/tools
+
+# FIXME?
+%{_datadir}/%{name}/Gemfile*
+%{_datadir}/%{name}/Rakefile
