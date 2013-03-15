@@ -6,7 +6,7 @@ Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
 Name:		metasploit
 Version:	4.5.2
-Release:	0.4
+Release:	0.5
 License:	MFL v1.2+
 Group:		Applications
 Source0:	http://downloads.metasploit.com/data/releases/archive/framework-%{version}.tar.bz2
@@ -19,7 +19,7 @@ Requires:	ruby
 #Requires:	ruby-RubyGems
 BuildArch:	noarch
 # currently archive contains mixed arch files, do not generate any dependencies at all
-AutoReqProv: no
+AutoReqProv:	no
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # Shellcode templates for various arches
@@ -53,14 +53,25 @@ INFO: Dla wykorzystującej język ruby wersji 3.1 nie przeniesiono
 jeszcze wszystkich exploitów. Nie jest to pełny zamiennik Perlowego
 Metasploit Framework 2.7.
 
+%package doc
+Summary:	Manual for %{name}
+Summary(fr.UTF-8):	Documentation pour %{name}
+Summary(it.UTF-8):	Documentazione di %{name}
+Summary(pl.UTF-8):	Podręcznik dla %{name}
+Group:		Documentation
+
+%description doc
+Documentation for %{name}.
+
 %prep
 %setup -q -n msf3
 find -name .svn -type d -print0 | xargs -0 rm -rf
-egrep -rl '/usr/local/bin/ruby|/''usr/bin/env' . | xargs %{__sed} -i -e '
+grep -Erl '/usr/local/bin/ruby|/''usr/bin/env' . | xargs %{__sed} -i -e '
 	1s,#!.*/bin/ruby,#!/''usr/bin/ruby,
 	1s,#!/''usr/bin/env ruby,#!/''usr/bin/ruby,
 '
-#%patch0 -p1
+# junk
+%{__rm} -r documentation/rpm
 
 # cleanup backups after patching
 find . '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
@@ -80,7 +91,12 @@ if cp -al README $RPM_BUILD_ROOT/README 2>/dev/null; then
 fi
 
 cp -a$l . $RPM_BUILD_ROOT%{_datadir}/%{name}
-mv $RPM_BUILD_ROOT%{_datadir}/%{name}/msf* $RPM_BUILD_ROOT%{_bindir}
+
+# use symlinks
+for a in $RPM_BUILD_ROOT%{_datadir}/%{name}/msf*; do
+	ln -s ${a#$RPM_BUILD_ROOT} $RPM_BUILD_ROOT%{_bindir}
+done
+
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/%{name}/.{gitignore,rspec,travis.yml}
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/%{name}/{*.md,COPYING,HACKING,LICENSE}
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/%{name}/test
@@ -108,9 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/msfvenom
 
 %dir %{_datadir}/%{name}
+%attr(755,root,root) %{_datadir}/%{name}/msf*
 %{_datadir}/%{name}/armitage
 %{_datadir}/%{name}/data
-%{_datadir}/%{name}/documentation
 %{_datadir}/%{name}/external
 %{_datadir}/%{name}/lib
 %{_datadir}/%{name}/modules
@@ -122,3 +138,7 @@ rm -rf $RPM_BUILD_ROOT
 # FIXME?
 %{_datadir}/%{name}/Gemfile*
 %{_datadir}/%{name}/Rakefile
+
+%files doc
+%defattr(644,root,root,755)
+%{_datadir}/%{name}/documentation
