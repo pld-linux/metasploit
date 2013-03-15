@@ -1,11 +1,12 @@
 # TODO:
 # - add R: rails and RubyGems (msfweb)
 # - some docs redundant
+# - package stuff for current arch, require tools from system
 Summary:	The Metasploit Framework - a powerful tool for penetration testing
 Summary(pl.UTF-8):	Metasploit Framework - narzędzie wspomagające testy penetracyjne
 Name:		metasploit
 Version:	4.5.2
-Release:	0.2
+Release:	0.4
 License:	MFL v1.2+
 Group:		Applications
 Source0:	http://downloads.metasploit.com/data/releases/archive/framework-%{version}.tar.bz2
@@ -17,6 +18,8 @@ BuildRequires:	sed >= 4.0
 Requires:	ruby
 #Requires:	ruby-RubyGems
 BuildArch:	noarch
+# currently archive contains mixed arch files, do not generate any dependencies at all
+AutoReqProv: no
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # Shellcode templates for various arches
